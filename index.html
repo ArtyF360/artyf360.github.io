@@ -1,104 +1,307 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<title>CSS Template</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-* {
-  box-sizing: border-box;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arty Library — Public Library Demo</title>
+  <meta name="description" content="Arty Library is a simple single‑page demo website for a public library." />
+  <style>
+    :root{
+      --bg: #0f172a;        /* slate-900 */
+      --panel: #111827;     /* gray-900 */
+      --muted: #94a3b8;     /* slate-400 */
+      --text: #e5e7eb;      /* gray-200 */
+      --brand: #7c3aed;     /* violet-600 */
+      --brand-2: #22d3ee;   /* cyan-400 */
+      --accent: #10b981;    /* emerald-500 */
+      --card: #0b1220;      
+      --ring: rgba(124, 58, 237, .4);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text); background: radial-gradient(1200px 600px at 90% -10%, rgba(124,58,237,.25), transparent 60%),
+                         radial-gradient(800px 400px at -10% 0%, rgba(34,211,238,.25), transparent 60%),
+                         var(--bg);
+      min-height:100dvh;
+    }
+    a{color:var(--brand-2); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{width:min(1100px, 92vw); margin-inline:auto}
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(1.2) blur(10px);
+      background: linear-gradient(180deg, rgba(17,24,39,.9), rgba(17,24,39,.6));
+      border-bottom:1px solid rgba(148,163,184,.2);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.8rem 0}
+    .brand{display:flex; align-items:center; gap:.7rem; font-weight:700; letter-spacing:.3px}
+    .logo{
+      width:38px; height:38px; border-radius:12px; display:grid; place-items:center; color:white;
+      background: conic-gradient(from 210deg, var(--brand), var(--brand-2), var(--accent), var(--brand));
+      box-shadow: 0 6px 18px rgba(34,211,238,.25), inset 0 0 0 2px rgba(255,255,255,.1);
+      font-size:20px; font-weight:900;
+    }
+    nav a{margin-left:1rem; padding:.45rem .7rem; border-radius:10px}
+    nav a:hover{background:rgba(124,58,237,.15)}
 
-/* Style the header */
-header {
-  background-color: #666;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: white;
-}
+    /* Hero */
+    .hero{display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center; padding:3rem 0 2rem}
+    .hero h1{font-size:clamp(1.8rem, 2.6vw + 1rem, 3rem); line-height:1.1; margin:.25rem 0}
+    .hero p{color:var(--muted)}
+    .cta{display:flex; gap:1rem; margin-top:1.1rem}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; padding:.7rem 1rem; border-radius:12px; border:1px solid rgba(124,58,237,.35)}
+    .btn.primary{background:linear-gradient(135deg, var(--brand), #5b21b6); color:white; border-color:transparent; box-shadow:0 12px 24px rgba(124,58,237,.35)}
+    .btn.secondary{background:rgba(124,58,237,.12); color:var(--text)}
 
-/* Create two columns/boxes that floats next to each other */
-nav {
-  float: left;
-  width: 30%;
-  height: 300px; /* only for demonstration, should be removed */
-  background: #ccc;
-  padding: 20px;
-}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.0)); border:1px solid rgba(148,163,184,.15); border-radius:var(--radius); box-shadow:0 10px 30px rgba(2,6,23,.6)}
 
-/* Style the list inside the menu */
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
+    /* Sections */
+    section{padding:2.5rem 0}
+    h2{font-size:1.6rem; margin:0 0 .8rem}
+    .grid{display:grid; gap:1rem}
+    .grid.cols-3{grid-template-columns:repeat(3, 1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2, 1fr)}
+    @media (max-width: 900px){.hero{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:1fr}.grid.cols-2{grid-template-columns:1fr}}
 
-article {
-  float: left;
-  padding: 20px;
-  width: 70%;
-  background-color: #f1f1f1;
-  height: 300px; /* only for demonstration, should be removed */
-}
+    /* Catalog */
+    .catalog .input{
+      width:100%; padding:.8rem 1rem; background:#0c1220; color:var(--text);
+      border:1px solid rgba(148,163,184,.2); border-radius:12px; outline:none;
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+    .catalog .input:focus{box-shadow: inset 0 0 0 2px var(--ring)}
 
-/* Clear floats after the columns */
-section::after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    .hours table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px}
+    .hours th, .hours td{padding:.6rem .8rem; text-align:left; border-bottom:1px solid rgba(148,163,184,.15)}
+    .hours th{color:#cbd5e1; font-weight:600; background:rgba(148,163,184,.06)}
 
-/* Style the footer */
-footer {
-  background-color: #777;
-  padding: 10px;
-  text-align: center;
-  color: white;
-}
+    /* Gallery */
+    .gallery figure{margin:0; overflow:hidden; border-radius:14px; border:1px solid rgba(148,163,184,.2); background:#0c1220}
+    .gallery figcaption{padding:.6rem .8rem; color:var(--muted); font-size:.95rem; border-top:1px solid rgba(148,163,184,.1)}
+    .gallery .image{display:block; width:100%; aspect-ratio:16/9}
 
-/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-@media (max-width: 600px) {
-  nav, article {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
+    /* Footer */
+    footer{padding:2rem 0 3rem; color:var(--muted)}
+    .pill{display:inline-block; padding:.35rem .6rem; background:rgba(34,197,94,.12); color:#bbf7d0; border:1px solid rgba(34,197,94,.25); border-radius:999px; font-size:.8rem}
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo" aria-hidden="true">A</span> Arty Library</div>
+      <nav aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#catalog">Catalog</a>
+        <a href="#events">Events</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<h2>CSS Layout Float</h2>
-<p>In this example, we have created a header, two columns/boxes and a footer. On smaller screens, the columns will stack on top of each other.</p>
-<p>Resize the browser window to see the responsive effect (you will learn more about this in our next chapter - HTML Responsive.)</p>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div>
+        <p class="pill">Public Library · Since 1958</p>
+        <h1>Discover. Create. Belong.</h1>
+        <p>Welcome to <strong>Arty Library</strong> — your creative corner for books, workshops, and community. This is a single‑page demo website with accessible, responsive design.</p>
+        <div class="cta">
+          <a class="btn primary" href="#catalog">Search catalog</a>
+          <a class="btn secondary" href="#events">See events</a>
+        </div>
+      </div>
+      <div class="card" style="padding:1rem">
+        <!-- Decorative SVG "hero" illustration -->
+        <svg class="image" viewBox="0 0 1280 720" role="img" aria-label="Abstract library skyline with books and sun">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1f2937"/>
+              <stop offset="100%" stop-color="#0b1020"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7c3aed"/>
+              <stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g1)"/>
+          <circle cx="1040" cy="120" r="70" fill="#fde68a" fill-opacity=".9"/>
+          <!-- Stylized books as buildings -->
+          <g transform="translate(120,160)">
+            <rect x="0" y="200" width="120" height="360" rx="14" fill="#334155"/>
+            <rect x="140" y="170" width="140" height="390" rx="14" fill="#475569"/>
+            <rect x="300" y="220" width="100" height="340" rx="14" fill="#1f2937"/>
+            <rect x="420" y="190" width="160" height="370" rx="14" fill="#374151"/>
+            <rect x="600" y="240" width="120" height="320" rx="14" fill="#0ea5e9" opacity=".7"/>
+            <rect x="740" y="210" width="130" height="350" rx="14" fill="#8b5cf6" opacity=".7"/>
+          </g>
+          <text x="80" y="120" fill="url(#g2)" font-size="72" font-weight="800" font-family="system-ui,Segoe UI,Roboto">Arty Library</text>
+        </svg>
+      </div>
+    </section>
 
-<header>
-  <h2>Cities</h2>
-</header>
+    <!-- ABOUT -->
+    <section id="about" class="grid cols-2">
+      <div class="card" style="padding:1rem 1.2rem">
+        <h2>About Arty Library</h2>
+        <p>We’re a community hub focused on <em>reading</em>, <em>making</em>, and <em>learning</em>. Borrow books, use computers, or join our free clubs — from creative writing to beginner coding.</p>
+        <ul>
+          <li>Free membership & Wi‑Fi</li>
+          <li>Borrow books, e‑books, and media</li>
+          <li>Makerspace & study rooms</li>
+        </ul>
+      </div>
+      <div class="card hours" style="padding:1rem 1.2rem">
+        <h2>Opening Hours</h2>
+        <table aria-label="Opening hours">
+          <thead><tr><th>Day</th><th>Hours</th></tr></thead>
+          <tbody>
+            <tr><td>Mon–Fri</td><td>09:00 – 19:00</td></tr>
+            <tr><td>Saturday</td><td>10:00 – 14:00</td></tr>
+            <tr><td>Sunday</td><td>Closed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-<section>
-  <nav>
-    <ul>
-      <li><a href="#">London</a></li>
-      <li><a href="#">Paris</a></li>
-      <li><a href="#">Tokyo</a></li>
-    </ul>
-  </nav>
-  
-  <article>
-    <h1>London</h1>
-    <p>London is the capital city of England. It is the most populous city in the  United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
-    <p>Standing on the River Thames, London has been a major settlement for two millennia, its history going back to its founding by the Romans, who named it Londinium.</p>
-  </article>
-</section>
+    <!-- CATALOG -->
+    <section id="catalog" class="catalog">
+      <div class="card" style="padding:1rem 1.2rem">
+        <h2>Catalog (demo)</h2>
+        <p class="muted">Type a title or author and press Enter — this demo shows a static example.</p>
+        <input class="input" type="search" placeholder="Search books, authors, topics…" aria-label="Search catalog" />
+        <div class="grid cols-3" style="margin-top:1rem">
+          <article class="card" style="padding:1rem">
+            <strong>The Art of Community</strong><br><span class="muted">J. N. Rivers · 2022</span>
+          </article>
+          <article class="card" style="padding:1rem">
+            <strong>Sketchbook Stories</strong><br><span class="muted">M. Kovač · 2021</span>
+          </article>
+          <article class="card" style="padding:1rem">
+            <strong>Quiet Corners</strong><br><span class="muted">L. Novak · 2020</span>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<footer>
-  <p>Footer</p>
-</footer>
+    <!-- EVENTS -->
+    <section id="events">
+      <div class="card" style="padding:1rem 1.2rem">
+        <h2>Upcoming Events</h2>
+        <div class="grid cols-3">
+          <article class="card" style="padding:1rem">
+            <h3 style="margin:.2rem 0">Kids Art Hour</h3>
+            <p class="muted">Every Wednesday · 16:00</p>
+            <p>Drop‑in arts & crafts for ages 6–12. Materials provided.</p>
+          </article>
+          <article class="card" style="padding:1rem">
+            <h3 style="margin:.2rem 0">Book Club</h3>
+            <p class="muted">1st Thursday · 18:00</p>
+            <p>Monthly discussion group — all readers welcome.</p>
+          </article>
+          <article class="card" style="padding:1rem">
+            <h3 style="margin:.2rem 0">Makerspace Intro</h3>
+            <p class="muted">Saturdays · 11:00</p>
+            <p>Get started with 3D printing and beginner coding projects.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <!-- GALLERY (3 generated images inside this prompt: inline SVGs) -->
+    <section id="gallery" class="gallery">
+      <h2>Gallery</h2>
+      <div class="grid cols-3">
+        <figure class="card">
+          <svg class="image" viewBox="0 0 800 450" role="img" aria-label="Library exterior with trees and sun">
+            <defs>
+              <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0ea5e9"/>
+                <stop offset="100%" stop-color="#7c3aed"/>
+              </linearGradient>
+            </defs>
+            <rect width="100%" height="100%" fill="#0b1220"/>
+            <circle cx="690" cy="80" r="40" fill="#fef08a"/>
+            <g transform="translate(80,170)">
+              <rect x="0" y="40" width="420" height="180" rx="14" fill="#111827" stroke="#94a3b8" opacity=".7"/>
+              <rect x="40" y="0" width="140" height="220" rx="12" fill="#1f2937"/>
+              <rect x="200" y="0" width="140" height="220" rx="12" fill="#1f2937"/>
+              <rect x="360" y="0" width="40" height="220" rx="10" fill="#22d3ee"/>
+              <rect x="36" y="46" width="368" height="8" fill="#22d3ee" opacity=".7"/>
+            </g>
+            <g transform="translate(560,260)">
+              <circle cx="0" cy="50" r="50" fill="#14532d"/>
+              <rect x="-12" y="98" width="24" height="32" fill="#14532d"/>
+            </g>
+            <text x="60" y="90" fill="url(#bg1)" font-family="system-ui,Segoe UI,Roboto" font-size="44" font-weight="800">Arty Library</text>
+          </svg>
+          <figcaption>Arty Library — exterior</figcaption>
+        </figure>
+        <figure class="card">
+          <svg class="image" viewBox="0 0 800 450" role="img" aria-label="Cozy reading room with chair and lamp">
+            <rect width="100%" height="100%" fill="#0b1220"/>
+            <rect x="80" y="80" width="260" height="220" rx="10" fill="#1f2937"/>
+            <rect x="110" y="110" width="60" height="160" rx="6" fill="#94a3b8"/>
+            <rect x="180" y="110" width="60" height="160" rx="6" fill="#64748b"/>
+            <rect x="250" y="110" width="60" height="160" rx="6" fill="#94a3b8"/>
+            <rect x="420" y="180" width="150" height="110" rx="18" fill="#8b5cf6"/>
+            <rect x="560" y="150" width="10" height="180" fill="#f59e0b"/>
+            <circle cx="565" cy="150" r="50" fill="#fde68a"/>
+            <rect x="430" y="285" width="130" height="12" rx="6" fill="#1f2937"/>
+            <circle cx="485" cy="185" r="8" fill="#22d3ee"/>
+          </svg>
+          <figcaption>Cozy reading room</figcaption>
+        </figure>
+        <figure class="card">
+          <svg class="image" viewBox="0 0 800 450" role="img" aria-label="Children's art corner with table and bunting">
+            <rect width="100%" height="100%" fill="#0b1220"/>
+            <path d="M100,90 L220,90 L260,120 L300,90 L420,90 L460,120 L500,90 L620,90" stroke="#22d3ee" stroke-width="6" fill="none"/>
+            <rect x="180" y="240" width="440" height="24" rx="8" fill="#334155"/>
+            <rect x="200" y="180" width="400" height="80" rx="12" fill="#111827" stroke="#64748b"/>
+            <circle cx="230" cy="220" r="12" fill="#ef4444"/>
+            <circle cx="270" cy="220" r="12" fill="#22c55e"/>
+            <circle cx="310" cy="220" r="12" fill="#3b82f6"/>
+            <rect x="520" y="200" width="40" height="40" rx="6" fill="#fbbf24"/>
+            <rect x="450" y="195" width="28" height="50" rx="6" fill="#7c3aed"/>
+          </svg>
+          <figcaption>Kids’ art corner</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="grid cols-2">
+      <div class="card" style="padding:1rem 1.2rem">
+        <h2>Contact</h2>
+        <p>Arty Library<br>123 Library Lane<br>Cityville</p>
+        <p><strong>Email:</strong> hello@artylibrary.example<br><strong>Phone:</strong> +1 (555) 123‑4567</p>
+      </div>
+      <div class="card" style="padding:1rem 1.2rem">
+        <h2>Newsletter</h2>
+        <p>Get monthly updates on new books and workshops.</p>
+        <form onsubmit="event.preventDefault(); alert('Thanks for subscribing! (Demo)');">
+          <label for="email" class="sr-only">Email</label>
+          <input id="email" type="email" required placeholder="you@example.com" class="input"/>
+          <div style="height:.6rem"></div>
+          <button class="btn primary" type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="y"></span> Arty Library · Single‑page demo</p>
+    </div>
+  </footer>
+
+  <script>
+    // Update year
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
