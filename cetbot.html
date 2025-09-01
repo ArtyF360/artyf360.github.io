@@ -1,1 +1,59 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moj RAG klepet</title>
+  <meta name="description" content="Preprost klepet z dokumenti prek AnythingLLM (Docker) in Cloudflare Tunnel." />
+  <style>
+    :root { --maxw: 900px; }
+    body { font-family: system-ui, Arial, sans-serif; margin: 0; line-height: 1.6; }
+    header { padding: 2.5rem 1rem; background: #0f172a; color: #fff; }
+    main { max-width: var(--maxw); margin: 0 auto; padding: 2rem 1rem; }
+    code, pre { background:#0b1020; color:#d1e7ff; padding:.25rem .5rem; border-radius:.375rem }
+    .card { border:1px solid #e5e7eb; border-radius:12px; padding:1rem; }
+    footer { max-width: var(--maxw); margin: 2rem auto; padding: 0 1rem 3rem; color:#6b7280; }
+  </style>
+</head>
+<body>
+  <header>
+    <div style="max-width: var(--maxw); margin:0 auto;">
+      <h1 style="margin:0 0 .25rem 0;">Moj RAG klepet</h1>
+      <p style="margin:0;">AnythingLLM (Docker) + Cloudflare Tunnel + GitHub Pages</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Kako uporabljati</h2>
+      <ol>
+        <li>Klikni plavajoči gumb (mehurček) v spodnjem desnem kotu, da odpreš chatbot.</li>
+        <li>Vprašaj po vsebini dokumentov izbranega delovnega prostora.</li>
+      </ol>
+      <p><strong>Opomba:</strong> Spletna stran teče na GitHub Pages (HTTPS), backend pa je dostopen prek Cloudflare Tunnel (HTTPS) do tvoje lokalne instalice AnythingLLM.</p>
+    </div>
+
+    <h3>Tehnične podrobnosti</h3>
+    <ul>
+      <li>Embed ID: nastaviš v <em>Tools → Chat Embed</em> (AnythingLLM v Dockerju), nato “Create embed”.</li>
+      <li>Cloudflare Tunnel: zaženi <code>cloudflared tunnel --url http://localhost:3001</code> in uporabi izpisani <code>https://CF_HOST</code>.</li>
+      <li>Preveri API: odpri <code>https://CF_HOST/api/docs</code> (Swagger se mora naložiti).</li>
+    </ul>
+  </main>
+
+  <!-- === ANYTHINGLLM EMBED WIDGET ===
+       Oba URL-ja MORATA biti HTTPS in kazati na isti CF host.
+       Zamenjaj YOUR_EMBED_ID in CF_HOST. -->
+  <script
+    data-embed-id="a23bd8c8-fa37-4c9a-8d5c-8db7f5ebcf8d"
+    data-base-api-url="https://quantum-medicare-teaches-appearing.trycloudflare.com/api/embed"
+    src="https://quantum-medicare-teaches-appearing.trycloudflare.com/embed/anythingllm-chat-widget.min.js">
+  </script>
+
+  <footer>
+    <p>© <span id="y"></span> — Demo. Ta stran je statična in primerna za GitHub Pages.</p>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
 
